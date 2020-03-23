@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:receive_sharing_intent/receive_sharing_intent.dart';
@@ -10,99 +13,99 @@ class ReceiveSharingPage extends StatefulWidget {
 
 class _ReceiveSharingPageState extends State<ReceiveSharingPage> {
 
-  final formKey = GlobalKey<FormState>();
-
   StreamSubscription _intentDataStreamSubscription;
   List<SharedMediaFile> _sharedFiles;
-  String _sharedText;
-  String _picturePath ="";
+  String _sharedText = '';
+  String _picturePath = '';
+  File pictureFile;
+
+  
   @override
   void initState(){
     super.initState();
 
-        // For sharing images coming from outside the app while the app is in the memory
+  
+  //Para compartir imágenes que provienen de fuera de la aplicación mientras la aplicación está en la memoria
     _intentDataStreamSubscription = ReceiveSharingIntent.getMediaStream()
         .listen((List<SharedMediaFile> value) {
       setState(() {
+        print("Shared:" + (_sharedFiles?.map((f) => f.path)?.join(",") ?? ""));
         _sharedFiles = value;
         _picturePath = _sharedFiles[0].path;
-        print("Shared:" + (_sharedFiles?.map((f) => f.path)?.join(",") ?? ""));
+        pictureFile = new File(_picturePath);
+        print(pictureFile.existsSync());
       });
     }, onError: (err) {
       print("getIntentDataStream error: $err");
     });
 
-    // For sharing images coming from outside the app while the app is closed
+    //Para compartir imágenes que provienen de fuera de la aplicación mientras la aplicación está cerrada
     ReceiveSharingIntent.getInitialMedia().then((List<SharedMediaFile> value) {
       setState(() {
         _sharedFiles = value;
         _picturePath = _sharedFiles[0].path;
-        print("Shared:" + (_sharedFiles?.map((f) => f.path)?.join(",") ?? ""));
+        pictureFile = new File(_picturePath);
+        print(pictureFile.existsSync());
       });
     });
 
-    // For sharing or opening urls/text coming from outside the app while the app is in the memory
+    //Para compartir o abrir URL / mensajes de texto que provienen de fuera de la aplicación mientras la aplicación está en la memoria
     _intentDataStreamSubscription =
         ReceiveSharingIntent.getTextStream().listen((String value) {
       setState(() {
         _sharedText = value;
-        print("Shared: $_sharedText");
       });
     }, onError: (err) {
       print("getLinkStream error: $err");
     });
 
-    // For sharing or opening urls/text coming from outside the app while the app is closed
+    //Para compartir o abrir URL / mensajes de texto que provienen de fuera de la aplicación mientras la aplicación está cerrada
     ReceiveSharingIntent.getInitialText().then((String value) {
       setState(() {
-        _sharedText = value;
-        print("Shared: $_sharedText");
+        _sharedText = value != null ? value : '';
       });
     });
   }
 
 
   Widget build(BuildContext context) {
-    const textStyleBold = const TextStyle(fontWeight: FontWeight.bold);
+    //const textStyleBold = const TextStyle(fontWeight: FontWeight.bold);
     return Scaffold(
       appBar: AppBar(
         title: Text('MoonLine'),
       ),
-      body: SingleChildScrollView(
+      body: Center(
         child: Container(
           padding: EdgeInsets.all(15.0),
-          child: Form(
-            key: formKey,
             child: Column(
               children: <Widget>[
-               // _mostrarFoto(),
+                Text('Referencia'),
+                _buscarId(),
+              // _crearNombre(),
+               _crearBoton(),
                 //SizedBox(height: 30.0),
+                 //Text('Text:$_sharedText'), _picturePath.length == 0 ? Container() :
+                // Text('Picture Path:$_picturePath'),
+            // _picturePath.length == 0 ? Container() : Image.asset(_picturePath)
+            pictureFile != null && pictureFile.existsSync()
+                ? Image.memory(
+                    Uint8List.fromList(pictureFile.readAsBytesSync()),
+                    alignment: Alignment.center,
+                    height: 300,
+                    width: 300,
+                    fit: BoxFit.contain,
+                  )
+                : Container(),
+               
+              //Para compartir la url de la imagen
               //Text("Shared files:", style: textStyleBold),
               //Text(_sharedFiles?.map((f) => f.path)?.join(",") ?? ""),
               
-              Text('Text:$_sharedText'),
-              //_picturePath.length == 0 ? Container() : Text('Picture Path:$_picturePath'),
-              _picturePath.length == 0 ? Container() : Image.asset(_picturePath),
-               // _buscarId(),
-               // _crearNombre(),
-               // _crearBoton(),
               ],
-
-            ),
-          ),
+            ), 
         ),
-      ),
-      
+      ), 
     );
-  }
-
-  Widget _mostrarFoto() {
-    return Image(
-
-          image: AssetImage('assets/original.png'),
-          height: 200.0,
-          fit: BoxFit.cover,
-        );
   }
 
   Widget _buscarId() {
@@ -110,7 +113,7 @@ class _ReceiveSharingPageState extends State<ReceiveSharingPage> {
      // initialValue: producto.valor.toString(),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        labelText: 'ID'
+        labelText: 'Ingresa No. de pedido'
       ),
       //onSaved: (value)=> producto.valor = double.parse(value) ,
       validator: (value){
@@ -152,8 +155,8 @@ class _ReceiveSharingPageState extends State<ReceiveSharingPage> {
       ),
       color: Colors.blue,
       textColor: Colors.white,
-      label: Text('Guardar'),
-      icon: Icon(Icons.save),
+      label: Text('Buscar'),
+      icon: Icon(Icons.search),
       onPressed: (){
 
       },

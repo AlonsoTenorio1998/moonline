@@ -1,27 +1,8 @@
 {
     "logs": [
         {
-            "outputFile": "/home/carlos/Documentos/ProyectsFlutter/moonline/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "outputFile": "/home/carlos/Documentos/GitHub/moonline/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
             "map": [
-                {
-                    "source": "/home/carlos/Documentos/ProyectsFlutter/moonline/build/flutter_youtube/intermediates/packaged_res/debug/values/values.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,19,20,24",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,94,140,186,233,284,331,377,421,500,544,593,898,988,1138",
-                        "endLines": "2,3,4,5,6,7,8,9,10,11,12,18,19,23,24",
-                        "endColumns": "38,45,45,46,50,46,45,43,78,43,48,12,89,12,79",
-                        "endOffsets": "89,135,181,228,279,326,372,416,495,539,588,893,983,1133,1213"
-                    },
-                    "to": {
-                        "startLines": "19,28,29,30,31,56,57,66,285,287,288,295,301,302,306",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "1238,1918,1964,2010,2057,3593,3640,4274,18496,18628,18672,19234,19539,19629,19779",
-                        "endLines": "19,28,29,30,31,56,57,66,285,287,288,300,301,305,306",
-                        "endColumns": "38,45,45,46,50,46,45,43,78,43,48,12,89,12,79",
-                        "endOffsets": "1272,1959,2005,2052,2103,3635,3681,4313,18570,18667,18716,19534,19624,19774,19854"
-                    }
-                },
                 {
                     "source": "/home/carlos/.gradle/caches/transforms-2/files-2.1/7def8d6c3751559765cf68c2d5a2dddd/appcompat-1.1.0/res/values/values.xml",
                     "from": {
@@ -61,6 +42,44 @@
                     }
                 },
                 {
+                    "source": "/home/carlos/Documentos/GitHub/moonline/build/flutter_youtube/intermediates/packaged_res/debug/values/values.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,19,20,24",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,94,140,186,233,284,331,377,421,500,544,593,898,988,1138",
+                        "endLines": "2,3,4,5,6,7,8,9,10,11,12,18,19,23,24",
+                        "endColumns": "38,45,45,46,50,46,45,43,78,43,48,12,89,12,79",
+                        "endOffsets": "89,135,181,228,279,326,372,416,495,539,588,893,983,1133,1213"
+                    },
+                    "to": {
+                        "startLines": "19,28,29,30,31,56,57,66,285,287,288,295,301,302,306",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "1238,1918,1964,2010,2057,3593,3640,4274,18496,18628,18672,19234,19539,19629,19779",
+                        "endLines": "19,28,29,30,31,56,57,66,285,287,288,300,301,305,306",
+                        "endColumns": "38,45,45,46,50,46,45,43,78,43,48,12,89,12,79",
+                        "endOffsets": "1272,1959,2005,2052,2103,3635,3681,4313,18570,18667,18716,19534,19624,19774,19854"
+                    }
+                },
+                {
+                    "source": "/home/carlos/Documentos/GitHub/moonline/android/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "12",
+                        "endOffsets": "347"
+                    },
+                    "to": {
+                        "startLines": "1376",
+                        "startColumns": "4",
+                        "startOffsets": "88840",
+                        "endLines": "1380",
+                        "endColumns": "12",
+                        "endOffsets": "89132"
+                    }
+                },
+                {
                     "source": "/home/carlos/.gradle/caches/transforms-2/files-2.1/60c890b7febb99854cab301d6a2a855b/appcompat-resources-1.1.0/res/values/values.xml",
                     "from": {
                         "startLines": "2,29,36,47,74",
@@ -77,25 +96,6 @@
                         "endLines": "1960,1967,1978,3017,3022",
                         "endColumns": "24,24,24,24,24",
                         "endOffsets": "131679,132064,132661,187939,188209"
-                    }
-                },
-                {
-                    "source": "/home/carlos/Documentos/ProyectsFlutter/moonline/android/app/src/main/res/values/styles.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endLines": "6",
-                        "endColumns": "12",
-                        "endOffsets": "347"
-                    },
-                    "to": {
-                        "startLines": "1376",
-                        "startColumns": "4",
-                        "startOffsets": "88840",
-                        "endLines": "1380",
-                        "endColumns": "12",
-                        "endOffsets": "89132"
                     }
                 }
             ]
