@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:moonline/src/models/producto_model.dart';
+import 'package:moonline/src/providers/productos_provider.dart';
 import 'package:moonline/src/utils/util.dart' as utils;
 
 class CompartirPage extends StatefulWidget {
@@ -12,14 +13,28 @@ class CompartirPage extends StatefulWidget {
 }
 
 class _CompartirPageState extends State<CompartirPage> {
+
+  
   final formKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final productoProvider = new ProductoProvider();
   File foto;
 
   ProductoModel producto = new ProductoModel();
+  bool _guardando = false;
 
   @override
   Widget build(BuildContext context) {
+
+    final ProductoModel prodData = ModalRoute.of(context).settings.arguments;
+    if( prodData != null){
+      producto = prodData;
+    }
+
+
+
     return Scaffold(
+      key: scaffoldKey,
       appBar: AppBar(
         title: Text('Compartir'),
         actions: <Widget>[
@@ -43,6 +58,7 @@ class _CompartirPageState extends State<CompartirPage> {
                 _mostrarFofo(),
                 _buscarId(),
                 _crearNombre(),
+                _crearDisponible(),
                 _crearBoton(),
               ],   
             ),
@@ -91,6 +107,65 @@ class _CompartirPageState extends State<CompartirPage> {
     );
   }
 
+
+    Widget _mostrarFofo(){
+
+      if ( producto.fotoUrl !=null) {
+        
+
+        return FadeInImage(
+          image: NetworkImage(producto.fotoUrl),
+          placeholder: AssetImage('assets/original.gif'),
+          height: 300.0,
+          fit: BoxFit.contain, 
+          );
+      } else {
+
+        return Image(
+
+          image: AssetImage( foto?.path ?? 'assets/original.png'),
+          height: 300.0,
+          fit: BoxFit.cover,
+        );
+      }
+    }
+
+   _seleccionarFoto() async {
+     
+     _procesarImagen(ImageSource.gallery);
+      
+  }
+
+  _tomarFoto() async {
+   
+    _procesarImagen(ImageSource.camera);
+  }
+
+  _procesarImagen( ImageSource origen ) async{
+     foto = await ImagePicker.pickImage(
+        source: origen
+      );
+
+      if ( foto !=null ) {
+        //Limpieza 
+        producto.fotoUrl = null;
+      }
+
+      setState(() {
+        
+      });
+  }
+
+  _crearDisponible() {
+    return SwitchListTile(
+      value: producto.disponible, 
+      title: Text('Disponible'),
+      onChanged: (value)=> setState((){
+        producto.disponible = value;
+      }),
+    );
+  }
+
   Widget _crearBoton() {
     return RaisedButton.icon(
       shape: RoundedRectangleBorder(
@@ -100,59 +175,53 @@ class _CompartirPageState extends State<CompartirPage> {
       textColor: Colors.white,
       label: Text('Guardar'),
       icon: Icon(Icons.save),
-      onPressed: _submit,
+      onPressed:(_guardando) ? null: _submit,
     );
   }
 
-  void _submit() {
+  void _submit() async {
 
     if ( !formKey.currentState.validate() ) return;
 
     formKey.currentState.save();
 
-    print( producto.titulo);
-    print( producto.valor);
+    setState(() {_guardando = true; });
 
-    if ( formKey.currentState.validate() ){
-
+    if ( foto != null){
+      producto.fotoUrl = await productoProvider.subirImagen(foto);
     }
+
+
+
+
+    if ( producto.id == null){
+    productoProvider.crearProducto(producto);
+    } else {
+      productoProvider.editarProducto(producto);
+    }
+
+    //setState(() {_guardando = false; }); 
+    mostarSnackbar('Registro Guardado');
+
+    Navigator.pop(context);
+
+    /*if ( formKey.currentState.validate() ){
+
+    }*/
 
   }
 
-    Widget _mostrarFofo(){
+    void mostarSnackbar(String mensaje){
 
-      if ( producto.fotoUrl !=null) {
-        
-
-        return Container();
-      } else {
-
-        return Image(
-
-          image: AssetImage('assets/original.png'),
-          height: 300.0,
-          fit: BoxFit.cover,
+      final snackbar = SnackBar(
+        content: Text(mensaje),
+        duration: Duration(milliseconds: 1500),
         );
-      }
+
+        scaffoldKey.currentState.showSnackBar(snackbar);
     }
 
-    _seleccionarFoto() async {
 
-      foto = await ImagePicker.pickImage(
-        source: ImageSource.gallery
-      );
+    
 
-      if ( foto !=null ) {
-        //Limpieza 
-      }
-
-      setState(() {
-        
-      });
-  }
-
-  _tomarFoto(){
-
-
-  }
 }

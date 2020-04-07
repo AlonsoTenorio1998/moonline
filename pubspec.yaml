@@ -27,6 +27,8 @@ dependencies:
   flutter_youtube: ^2.0.0
   image_picker: ^0.6.3+4
   receive_sharing_intent: ^1.3.3
+  http: ^0.12.0+4
+  mime_type: ^0.2.7
   
 
 dev_dependencies:

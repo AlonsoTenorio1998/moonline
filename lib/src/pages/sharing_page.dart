@@ -74,7 +74,7 @@ class _ReceiveSharingPageState extends State<ReceiveSharingPage> {
       appBar: AppBar(
         title: Text('MoonLine'),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(15.0),
             child: Column(
@@ -91,8 +91,8 @@ class _ReceiveSharingPageState extends State<ReceiveSharingPage> {
                 ? Image.memory(
                     Uint8List.fromList(pictureFile.readAsBytesSync()),
                     alignment: Alignment.center,
-                    height: 300,
-                    width: 300,
+                    height: 250,
+                    width: 250,
                     fit: BoxFit.contain,
                   )
                 : Container(),
