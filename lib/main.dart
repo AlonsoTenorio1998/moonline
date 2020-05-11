@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MoonLine',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'ProductoPage',
+      initialRoute: 'ReceiveSharingPage',
       routes: {
         'HomePage'           : (BuildContext context)=> HomePage(),
         'CompartirPage'      : (BuildContext context)=> CompartirPage(),
